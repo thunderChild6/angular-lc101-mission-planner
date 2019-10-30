@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Button } from 'protractor';
 
 @Component({
   selector: 'app-equipment',
@@ -21,11 +22,27 @@ export class EquipmentComponent implements OnInit {
    cargoMass: number = 0;
    maximumAllowedMass: number = 2000;
    maxItems: number = 10;
+   canAdd: boolean = true;
 
    constructor() { }
 
    ngOnInit() { }
 
    // Code your addItem function here:
-   
+   addItem(equipment: object): boolean {
+    // this.cargoHold.push(equipment);
+    // this.cargoMass += equipment.mass;
+    if (this.cargoMass + equipment.mass <= this.maximumAllowedMass && this.cargoHold.length <= this.maxItems-1) {
+      this.cargoHold.push(equipment);
+      this.cargoMass += equipment.mass;
+      return true;
+    } else {
+      if (this.cargoMass > this.maximumAllowedMass || this.cargoHold.length === this.maxItems) {
+        this.canAdd = false;
+        document.getElementById("addButton").style.backgroundColor="gray";
+        return false;
+      } 
+    }
+   }
+
 }
